@@ -67,8 +67,8 @@ jobs:
         run: make all CXXFLAGS="-std=c++17 -O2 -Wall -Wextra -Wpedantic -Werror -arch arm64 -arch x86_64 -mmacosx-version-min=13.0 -isysroot $(xcrun --sdk macosx --show-sdk-path)"
       - name: Verify architectures and run programs
         run: |
-          lipo -verify_arch arm64 x86_64 build/vector_cli
-          lipo -verify_arch arm64 x86_64 build/tictactoe_cli
+          lipo build/vector_cli -verify_arch arm64 x86_64
+          lipo build/tictactoe_cli -verify_arch arm64 x86_64
           printf '0\n' | ./build/vector_cli
           printf '0\n' | ./build/tictactoe_cli
       - name: Package binaries and documentation
