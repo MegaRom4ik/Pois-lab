@@ -22,7 +22,9 @@ def check_model(folder):
         behaviors += len(re.findall(r"\b" + name + r"::(?!" + name + r"\b)\w+\s*\(", source))
     associations = 0
     for name, declaration in classes:
-        declaration = re.sub(r"#include.*", "", declaration)
+        private = declaration.split("private:", 1)[1].split("};", 1)[0]
+        parameters = " ".join(re.findall(r"\(([^)]*)\)", declaration))
+        declaration = private + " " + parameters
         for other, _ in classes:
             if other != name and re.search(r"\b" + other + r"\b", declaration):
                 associations += 1
