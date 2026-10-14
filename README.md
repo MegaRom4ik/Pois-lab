@@ -31,3 +31,14 @@ make test
 Рабочая ветка — `Mega`.
 
 [Задание](https://github.com/alix-zzh/ppois-course/blob/master/ru/lab1.md)
+
+## Лабораторная 2
+
+Кулинарная мастерская: рецепты, склад продуктов, закупки и приготовление.
+
+```sh
+make lab2
+./build/cooking_cli
+```
+
+Описание классов и операций — в [lab2/README.md](lab2/README.md).
