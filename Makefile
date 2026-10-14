@@ -49,3 +49,40 @@ docs:
 
 clean:
 	rm -rf build
+
+LAB2_SOURCES = $(wildcard lab2/src/*.cpp)
+LAB2_HEADERS = $(wildcard lab2/include/*.hpp)
+LAB2_TESTS = $(wildcard lab2/tests/*.cpp)
+
+.PHONY: lab2 test-lab2 coverage-lab2 docs-lab2 check-lab2-model
+lab2: build/cooking_cli
+
+build/cooking_cli: lab2/main.cpp $(LAB2_SOURCES) $(LAB2_HEADERS) | build
+	$(CXX) $(CXXFLAGS) -Ilab2/include lab2/main.cpp $(LAB2_SOURCES) -o $@
+
+build/cooking_tests: $(LAB2_TESTS) $(LAB2_SOURCES) $(LAB2_HEADERS) build/doctest.h
+	$(CXX) $(CXXFLAGS) -Ibuild -Ilab2/include $(LAB2_TESTS) $(LAB2_SOURCES) -o $@
+
+test-lab2: build/cooking_tests
+	./build/cooking_tests
+
+build/cooking_coverage_tests: $(LAB2_TESTS) $(LAB2_SOURCES) $(LAB2_HEADERS) build/doctest.h
+	$(CXX) $(CXXFLAGS) -O0 -g -fprofile-instr-generate -fcoverage-mapping -Ibuild -Ilab2/include $(LAB2_TESTS) $(LAB2_SOURCES) -o $@
+
+coverage-lab2: build/cooking_coverage_tests
+	LLVM_PROFILE_FILE=build/cooking.profraw ./build/cooking_coverage_tests
+	$(LLVM_PROFDATA) merge -sparse build/cooking.profraw -o build/cooking.profdata
+	$(LLVM_COV) export ./build/cooking_coverage_tests -instr-profile=build/cooking.profdata $(LAB2_SOURCES) > build/cooking-coverage.json
+	python3 scripts/check_lab2.py coverage build/cooking-coverage.json
+	$(LLVM_COV) show ./build/cooking_coverage_tests -instr-profile=build/cooking.profdata $(LAB2_SOURCES) -format=html -output-dir=build/cooking-coverage
+
+docs-lab2:
+	doxygen lab2/Doxyfile
+
+check-lab2-model:
+	python3 scripts/check_lab2.py model lab2
+
+all: lab2
+test: test-lab2
+coverage: coverage-lab2
+docs: docs-lab2
