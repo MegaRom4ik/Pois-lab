@@ -239,62 +239,27 @@ void next_day(Kitchen &kitchen, const std::optional<CookingSession> &session) {
     if (session) throw WorkflowError("Закончите приготовление");
     kitchen.next_day();
 }
-bool catalog_action(Action action, Kitchen &kitchen, const DietProfile &profile) {
-    if (action == Action::recipes) {
-        list_recipes(kitchen);
-        return true;
-    }
-    if (action == Action::add_recipe) {
-        add_recipe(kitchen);
-        return true;
-    }
-    if (action == Action::preview) {
-        const auto recipe = choose_recipe(kitchen, profile);
-        preview(recipe);
-        return true;
-    }
-    if (action == Action::stock) {
-        stock(kitchen);
-        return true;
-    }
-    if (action == Action::inventory) {
-        show_stock(kitchen);
-        return true;
-    }
-    if (action == Action::cost) {
-        estimate(kitchen, profile);
-        return true;
-    }
-    return false;
-}
-bool session_action(Action action, Kitchen &kitchen, const DietProfile &profile,
-                    std::optional<CookingSession> &session) {
-    if (action == Action::begin) {
-        begin(kitchen, session, profile);
-        return true;
-    }
-    if (action == Action::advance) {
-        advance(kitchen, session);
-        return true;
-    }
-    if (action == Action::next_day) {
-        next_day(kitchen, session);
-        return true;
-    }
-    if (action == Action::serve) {
-        serve(kitchen);
-        return true;
-    }
-    return false;
+void preview_recipe(const Kitchen &kitchen, const DietProfile &profile) {
+    const auto recipe = choose_recipe(kitchen, profile);
+    preview(recipe);
 }
 void operation(Action action, Kitchen &kitchen, Budget &budget, DietProfile &profile,
                std::optional<CookingSession> &session) {
-    if (catalog_action(action, kitchen, profile) || session_action(action, kitchen, profile, session)) return;
+    if (action == Action::recipes) return list_recipes(kitchen);
+    if (action == Action::add_recipe) return add_recipe(kitchen);
+    if (action == Action::preview) return preview_recipe(kitchen, profile);
+    if (action == Action::stock) return stock(kitchen);
+    if (action == Action::inventory) return show_stock(kitchen);
     if (action == Action::purchase) return purchase(kitchen, budget, profile);
+    if (action == Action::begin) return begin(kitchen, session, profile);
+    if (action == Action::advance) return advance(kitchen, session);
+    if (action == Action::next_day) return next_day(kitchen, session);
     if (action == Action::diet) {
         profile = read_profile();
         return;
     }
+    if (action == Action::serve) return serve(kitchen);
+    if (action == Action::cost) return estimate(kitchen, profile);
     if (action == Action::save || action == Action::load)
         return archive(kitchen, action == Action::save, session);
     throw WorkflowError("Нет такого пункта");
