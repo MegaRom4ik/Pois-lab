@@ -7,6 +7,14 @@
 using namespace cooking;
 namespace {
 constexpr int max_input_entries = 100;
+constexpr int sample_portions = 2;
+constexpr double sample_oats_grams = 100;
+constexpr double sample_milk_grams = 200;
+constexpr double sample_stock_grams = 1000;
+constexpr int sample_oats_expiry_day = 30;
+constexpr int sample_milk_expiry_day = 3;
+constexpr int sample_mixing_minutes = 2;
+constexpr int sample_cooking_minutes = 10;
 enum class Action {
     exit,
     recipes,
@@ -30,24 +38,27 @@ int read_count(const std::string &prompt) {
     return result;
 }
 Recipe sample_recipe() {
-    Recipe recipe("Каша", 2);
-    recipe.add_ingredient(IngredientAmount(Ingredient("Овёс", Nutrition(340, 12, 5, 60), {"глютен"}), Quantity(100)));
-    recipe.add_ingredient(IngredientAmount(Ingredient("Молоко", Nutrition(60, 3, 3, 5), {"молоко"}), Quantity(200)));
-    recipe.add_step(RecipeStep("Смешать овёс с молоком", 2));
-    recipe.add_step(RecipeStep("Варить, помешивая", 10, 0));
+    Recipe recipe("Каша", sample_portions);
+    recipe.add_ingredient(IngredientAmount(Ingredient("Овёс", Nutrition(340, 12, 5, 60), {"глютен"}),
+                                           Quantity(sample_oats_grams)));
+    recipe.add_ingredient(IngredientAmount(Ingredient("Молоко", Nutrition(60, 3, 3, 5), {"молоко"}),
+                                           Quantity(sample_milk_grams)));
+    recipe.add_step(RecipeStep("Смешать овёс с молоком", sample_mixing_minutes));
+    recipe.add_step(RecipeStep("Варить, помешивая", sample_cooking_minutes, 0));
     return recipe;
 }
 Kitchen sample_kitchen() {
     Kitchen kitchen;
     kitchen.register_recipe(sample_recipe());
-    kitchen.stock(InventoryBatch(Ingredient("Овёс"), 1000, 30, "Овёс-1"));
-    kitchen.stock(InventoryBatch(Ingredient("Молоко"), 1000, 3, "Молоко-1"));
+    kitchen.stock(InventoryBatch(Ingredient("Овёс"), sample_stock_grams, sample_oats_expiry_day, "Овёс-1"));
+    kitchen.stock(
+        InventoryBatch(Ingredient("Молоко"), sample_stock_grams, sample_milk_expiry_day, "Молоко-1"));
     return kitchen;
 }
 void list_recipes(const Kitchen &kitchen) {
     for (const auto &recipe : kitchen.book().recipes())
-        std::cout << recipe.name() << ": " << recipe.servings() << " порц., " << recipe.duration() << " мин., "
-                  << recipe.calories_per_serving() << " ккал/порц.\n";
+        std::cout << recipe.name() << ": " << recipe.servings() << " порц., " << recipe.duration()
+                  << " мин., " << recipe.calories_per_serving() << " ккал/порц.\n";
 }
 IngredientAmount read_ingredient() {
     const auto name = cli::read_line("Продукт: ");
@@ -61,8 +72,9 @@ IngredientAmount read_ingredient() {
     if (!allergen.empty()) allergens.push_back(allergen);
     const int vegetarian = cli::read<int>("Вегетарианский продукт? 1/0: ");
     if (vegetarian != 0 && vegetarian != 1) throw IngredientError("Введите 0 или 1");
-    return IngredientAmount(Ingredient(name, Nutrition(calories, protein, fat, carbs), allergens, vegetarian == 1),
-                            Quantity(grams));
+    return IngredientAmount(
+        Ingredient(name, Nutrition(calories, protein, fat, carbs), allergens, vegetarian == 1),
+        Quantity(grams));
 }
 void add_recipe(Kitchen &kitchen) {
     const auto name = cli::read_line("Название рецепта: ");
@@ -101,8 +113,9 @@ void stock(Kitchen &kitchen) {
 }
 void show_stock(const Kitchen &kitchen) {
     for (const auto &batch : kitchen.pantry().batches())
-        std::cout << batch.lot() << ": " << batch.ingredient().name() << ", " << batch.grams() << " г, годен до "
-                  << batch.expires_day() << (batch.usable(kitchen.day()) ? " — доступен\n" : " — недоступен\n");
+        std::cout << batch.lot() << ": " << batch.ingredient().name() << ", " << batch.grams()
+                  << " г, годен до " << batch.expires_day()
+                  << (batch.usable(kitchen.day()) ? " — доступен\n" : " — недоступен\n");
 }
 ShoppingList shopping_for(const Recipe &recipe, const Kitchen &kitchen, bool missing_only) {
     ShoppingList result;
@@ -134,12 +147,14 @@ void accept_purchase(Kitchen &kitchen, Budget &budget, const ShoppingList &list,
     std::cout << "Закупка принята\n";
 }
 void purchase(Kitchen &kitchen, Budget &budget, const DietProfile &profile) {
-    const auto list = shopping_for(choose_recipe(kitchen, profile), kitchen, true);
+    const auto recipe = choose_recipe(kitchen, profile);
+    const auto list = shopping_for(recipe, kitchen, true);
     if (list.items().empty()) {
         std::cout << "Продуктов достаточно\n";
         return;
     }
-    std::cout << "Стоимость недостающего: " << list.total() << ", бюджет: " << budget.limit() - budget.spent() << '\n';
+    std::cout << "Стоимость недостающего: " << list.total() << ", бюджет: " << budget.limit() - budget.spent()
+              << '\n';
     if (cli::read<int>("Оплатить и принять? 1 — да: ") != 1) return;
     const int expires = cli::read<int>("Годен до дня: ");
     accept_purchase(kitchen, budget, list, expires);
@@ -158,7 +173,8 @@ void advance(Kitchen &kitchen, std::optional<CookingSession> &session) {
     if (!session) throw WorkflowError("Сначала начните приготовление");
     session->complete_step();
     if (session->next_step() < static_cast<int>(session->recipe().steps().size())) {
-        std::cout << "Следующий шаг: " << session->recipe().steps()[session->next_step()].instruction() << '\n';
+        std::cout << "Следующий шаг: " << session->recipe().steps()[session->next_step()].instruction()
+                  << '\n';
         return;
     }
     auto dishes = kitchen.dishes();
@@ -180,8 +196,8 @@ DietProfile read_profile() {
 void serve(Kitchen &kitchen) {
     auto dishes = kitchen.dishes();
     for (std::size_t index = 0; index < dishes.size(); ++index)
-        std::cout << index + 1 << ": " << dishes[index].recipe().name() << ", осталось " << dishes[index].remaining()
-                  << '\n';
+        std::cout << index + 1 << ": " << dishes[index].recipe().name() << ", осталось "
+                  << dishes[index].remaining() << '\n';
     const int choice = read_count("Номер блюда: ");
     if (static_cast<std::size_t>(choice) > dishes.size()) throw OrderError("Блюдо не найдено");
     const int portions = read_count("Выдать порций: ");
@@ -200,41 +216,87 @@ void archive(Kitchen &kitchen, bool save, const std::optional<CookingSession> &s
         std::ifstream input(path);
         kitchen = codec.load(input);
     }
-    std::cout << "Рецепты и склад " << (save ? "сохранены" : "загружены") << "; готовые блюда в архив не входят\n";
+    std::cout << "Рецепты и склад " << (save ? "сохранены" : "загружены")
+              << "; готовые блюда в архив не входят\n";
 }
 void menu() {
-    std::cout << "\n1 — рецепты, 2 — добавить рецепт, 3 — рассчитать порции, 4 — принять продукты,\n"
-              << "5 — склад, 6 — купить недостающее, 7 — начать приготовление, 8 — завершить шаг,\n"
+    std::cout << "\n1 — рецепты, 2 — добавить рецепт, 3 — рассчитать порции, 4 — "
+                 "принять продукты,\n"
+              << "5 — склад, 6 — купить недостающее, 7 — начать приготовление, 8 — "
+                 "завершить шаг,\n"
               << "9 — следующий день, 10 — ограничения питания, 11 — выдать блюдо,\n"
-              << "12 — себестоимость, 13 — сохранить рецепты и склад, 14 — загрузить, 0 — выход\n";
+              << "12 — себестоимость, 13 — сохранить рецепты и склад, 14 — загрузить, "
+                 "0 — выход\n";
 }
 void estimate(const Kitchen &kitchen, const DietProfile &profile) {
     const auto recipe = choose_recipe(kitchen, profile);
     const auto list = shopping_for(recipe, kitchen, false);
-    std::cout << "Себестоимость порции с трудом и накладными: " << CostEstimate(list).per_serving(recipe) << '\n';
+    const CostEstimate estimate(list);
+    const double per_serving = estimate.per_serving(recipe);
+    std::cout << "Себестоимость порции с трудом и накладными: " << per_serving << '\n';
 }
 void next_day(Kitchen &kitchen, const std::optional<CookingSession> &session) {
     if (session) throw WorkflowError("Закончите приготовление");
     kitchen.next_day();
 }
+bool catalog_action(Action action, Kitchen &kitchen, const DietProfile &profile) {
+    if (action == Action::recipes) {
+        list_recipes(kitchen);
+        return true;
+    }
+    if (action == Action::add_recipe) {
+        add_recipe(kitchen);
+        return true;
+    }
+    if (action == Action::preview) {
+        const auto recipe = choose_recipe(kitchen, profile);
+        preview(recipe);
+        return true;
+    }
+    if (action == Action::stock) {
+        stock(kitchen);
+        return true;
+    }
+    if (action == Action::inventory) {
+        show_stock(kitchen);
+        return true;
+    }
+    if (action == Action::cost) {
+        estimate(kitchen, profile);
+        return true;
+    }
+    return false;
+}
+bool session_action(Action action, Kitchen &kitchen, const DietProfile &profile,
+                    std::optional<CookingSession> &session) {
+    if (action == Action::begin) {
+        begin(kitchen, session, profile);
+        return true;
+    }
+    if (action == Action::advance) {
+        advance(kitchen, session);
+        return true;
+    }
+    if (action == Action::next_day) {
+        next_day(kitchen, session);
+        return true;
+    }
+    if (action == Action::serve) {
+        serve(kitchen);
+        return true;
+    }
+    return false;
+}
 void operation(Action action, Kitchen &kitchen, Budget &budget, DietProfile &profile,
                std::optional<CookingSession> &session) {
-    if (action == Action::recipes) return list_recipes(kitchen);
-    if (action == Action::add_recipe) return add_recipe(kitchen);
-    if (action == Action::preview) return preview(choose_recipe(kitchen, profile));
-    if (action == Action::stock) return stock(kitchen);
-    if (action == Action::inventory) return show_stock(kitchen);
+    if (catalog_action(action, kitchen, profile) || session_action(action, kitchen, profile, session)) return;
     if (action == Action::purchase) return purchase(kitchen, budget, profile);
-    if (action == Action::begin) return begin(kitchen, session, profile);
-    if (action == Action::advance) return advance(kitchen, session);
-    if (action == Action::next_day) return next_day(kitchen, session);
     if (action == Action::diet) {
         profile = read_profile();
         return;
     }
-    if (action == Action::serve) return serve(kitchen);
-    if (action == Action::cost) return estimate(kitchen, profile);
-    if (action == Action::save || action == Action::load) return archive(kitchen, action == Action::save, session);
+    if (action == Action::save || action == Action::load)
+        return archive(kitchen, action == Action::save, session);
     throw WorkflowError("Нет такого пункта");
 }
 } // namespace
@@ -250,8 +312,6 @@ int main() {
             const auto action = static_cast<Action>(cli::read<int>("> "));
             if (action == Action::exit) break;
             operation(action, kitchen, budget, profile, session);
-        } catch (const std::exception &error) {
-            std::cerr << "Ошибка: " << error.what() << '\n';
-        }
+        } catch (const std::exception &error) { std::cerr << "Ошибка: " << error.what() << '\n'; }
     }
 }
