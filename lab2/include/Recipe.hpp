@@ -12,8 +12,8 @@ namespace cooking {
 /** A recipe with ingredients and ordered cooking steps. */
 class Recipe {
   public:
-    Recipe(std::string name = "Каша", int servings = 2, std::vector<IngredientAmount> ingredients = {},
-           std::vector<RecipeStep> steps = {});
+    Recipe(std::string name = "Каша", int servings = 2, const std::vector<IngredientAmount> &ingredients = {},
+           const std::vector<RecipeStep> &steps = {});
     const std::string &name() const { return name_; }
     int servings() const { return servings_; }
     const std::vector<IngredientAmount> &ingredients() const { return ingredients_; }
@@ -27,7 +27,7 @@ class Recipe {
   private:
     std::string name_;
     int servings_;
-    std::vector<IngredientAmount> ingredients_;
-    std::vector<RecipeStep> steps_;
+    const std::vector<IngredientAmount> &ingredients_;
+    const std::vector<RecipeStep> &steps_;
 };
 } // namespace cooking

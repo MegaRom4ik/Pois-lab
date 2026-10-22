@@ -13,7 +13,8 @@ namespace cooking {
 /** Ingredient storage that consumes usable batches by earliest expiry. */
 class Pantry {
   public:
-    Pantry(std::string name = "Склад", std::vector<InventoryBatch> batches = {}, double capacity = 100000);
+    Pantry(std::string name = "Склад", const std::vector<InventoryBatch> &batches = {},
+           double capacity = 100000);
     const std::string &name() const { return name_; }
     const std::vector<InventoryBatch> &batches() const { return batches_; }
     double capacity() const { return capacity_; }
@@ -25,7 +26,7 @@ class Pantry {
 
   private:
     std::string name_;
-    std::vector<InventoryBatch> batches_;
+    const std::vector<InventoryBatch> &batches_;
     double capacity_;
 };
 } // namespace cooking
