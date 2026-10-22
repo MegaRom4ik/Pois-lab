@@ -27,7 +27,7 @@ class Recipe {
   private:
     std::string name_;
     int servings_;
-    const std::vector<IngredientAmount> &ingredients_;
-    const std::vector<RecipeStep> &steps_;
+    std::vector<IngredientAmount> ingredients_;
+    std::vector<RecipeStep> steps_;
 };
 } // namespace cooking

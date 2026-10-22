@@ -26,7 +26,7 @@ class Pantry {
 
   private:
     std::string name_;
-    const std::vector<InventoryBatch> &batches_;
+    std::vector<InventoryBatch> batches_;
     double capacity_;
 };
 } // namespace cooking
