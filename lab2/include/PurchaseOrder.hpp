@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Заказ поставщику с оплатой и отменой. */
+/** A supplier order with payment and cancellation support. */
 class PurchaseOrder {
   public:
     PurchaseOrder(Supplier supplier = Supplier{}, ShoppingList list = ShoppingList{}, bool paid = false,

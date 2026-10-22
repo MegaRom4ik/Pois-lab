@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Режим выпечки и проверка духовки. */
+/** A baking schedule with oven readiness checks. */
 class BakingProfile {
   public:
     BakingProfile(std::string name = "Хлеб", double temperature = 180, int minutes = 30);

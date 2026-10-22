@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Шаг приготовления с длительностью и зависимостью. */
+/** A cooking step with a duration and prerequisite. */
 class RecipeStep {
   public:
     RecipeStep(std::string instruction = "Смешать", int minutes = 5, int prerequisite = -1);

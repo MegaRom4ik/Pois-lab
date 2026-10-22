@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Выдача блюда гостю с проверкой диеты. */
+/** Serving a dish to a guest after checking dietary restrictions. */
 class Serving {
   public:
     Serving(Dish dish = Dish{}, DietProfile guest = DietProfile{}, int delivered = 0);

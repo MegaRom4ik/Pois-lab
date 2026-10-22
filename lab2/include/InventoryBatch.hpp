@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Партия продукта со сроком годности. */
+/** An ingredient batch with an expiry date. */
 class InventoryBatch {
   public:
     InventoryBatch(Ingredient ingredient = Ingredient{}, double grams = 1000, int expires_day = 30,

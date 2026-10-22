@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Рабочее место и занятость. */
+/** A workstation and its availability. */
 class Workstation {
   public:
     Workstation(std::string name = "Стол", KitchenTool tool = KitchenTool{}, bool occupied = false);

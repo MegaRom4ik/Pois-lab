@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Масса продукта в граммах с учётом съедобной части. */
+/** Ingredient mass in grams, including the edible yield. */
 class Quantity {
   public:
     Quantity(double grams = 100, double yield = 1, std::string label = "г");

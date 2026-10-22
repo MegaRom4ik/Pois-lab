@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Замена продукта с коэффициентом массы. */
+/** An ingredient substitution with a mass conversion ratio. */
 class SubstitutionRule {
   public:
     SubstitutionRule(std::string original = "молоко", Ingredient replacement = Ingredient("вода"), double ratio = 1);

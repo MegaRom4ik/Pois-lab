@@ -3,7 +3,7 @@
 #include "SerializationError.hpp"
 #include <iosfwd>
 namespace cooking {
-/** Текстовый архив рецептов и склада; готовые блюда и незавершённые сессии не сохраняются. */
+/** A text archive of recipes and stock; prepared dishes and unfinished sessions are not saved. */
 class KitchenArchive {
   public:
     KitchenArchive(int version = 1, int max_recipes = 1000, int max_entries = 10000);

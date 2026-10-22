@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Бюджет закупок и учёт возвратов. */
+/** A purchasing budget with payment and refund tracking. */
 class Budget {
   public:
     Budget(double limit = 1000, double spent = 0, std::string currency = "BYN");

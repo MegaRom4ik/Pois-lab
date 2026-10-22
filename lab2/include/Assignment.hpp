@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Назначение задания повару и месту. */
+/** A task assigned to a chef and workstation. */
 class Assignment {
   public:
     Assignment(Chef chef = Chef{}, Task task = Task{}, Workstation station = Workstation{}, bool started = false);

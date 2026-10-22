@@ -16,7 +16,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Кулинарная мастерская: каталог, склад и готовые блюда. */
+/** A cooking workshop containing recipes, stock, and prepared dishes. */
 class Kitchen {
   public:
     Kitchen(RecipeBook book = RecipeBook{}, Pantry pantry = Pantry{}, std::vector<Dish> dishes = {}, int day = 1);

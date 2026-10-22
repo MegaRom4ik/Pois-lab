@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Готовое блюдо с количеством оставшихся порций. */
+/** A cooked dish with a remaining portion count. */
 class Dish {
   public:
     Dish(Recipe recipe = Recipe{}, int remaining = 2, int cooked_day = 1);

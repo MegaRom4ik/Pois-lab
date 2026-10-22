@@ -1,7 +1,7 @@
 #pragma once
 #include "CookingError.hpp"
 namespace cooking {
-/** Ошибка кулинарной модели: InvalidQuantityError. */
+/** Exception raised by the cooking model: InvalidQuantityError. */
 class InvalidQuantityError : public CookingError {
   public:
     using CookingError::CookingError;

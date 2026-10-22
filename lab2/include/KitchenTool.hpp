@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Инструмент с вместимостью и обязательной мойкой. */
+/** A kitchen tool with a capacity limit and cleaning requirements. */
 class KitchenTool {
   public:
     KitchenTool(std::string name = "Миска", double capacity = 2000, bool clean = true);

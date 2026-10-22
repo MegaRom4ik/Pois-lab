@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Позиция закупки с количеством и ценой. */
+/** A purchase item with an amount and price quote. */
 class ShoppingItem {
   public:
     ShoppingItem(IngredientAmount item = IngredientAmount{}, PriceQuote quote = PriceQuote{}, int day = 1);

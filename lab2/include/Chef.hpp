@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Повар с навыками и доступным рабочим временем. */
+/** A chef with skills and available working time. */
 class Chef {
   public:
     Chef(std::string name = "Повар", SkillProfile skills = SkillProfile{}, int available_minutes = 480);

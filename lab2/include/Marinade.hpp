@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** План маринования по массе и времени. */
+/** A marinating plan based on food mass and time. */
 class Marinade {
   public:
     Marinade(SeasoningBlend blend = SeasoningBlend{}, int minutes_per_kg = 60, double liquid_ratio = .2);

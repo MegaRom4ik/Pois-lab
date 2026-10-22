@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Приёмка поставки по дате и температуре. */
+/** Delivery acceptance based on arrival date and temperature. */
 class Delivery {
   public:
     Delivery(PurchaseOrder order = PurchaseOrder{}, int arrival_day = 2, double temperature = 4, bool accepted = false);

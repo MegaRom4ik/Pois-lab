@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Тесто: гидратация и масса. */
+/** Dough hydration and total mass. */
 class Dough {
   public:
     Dough(Quantity flour = Quantity(1000), Quantity water = Quantity(600), Quantity salt = Quantity(20));

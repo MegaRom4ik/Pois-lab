@@ -1,7 +1,7 @@
 #pragma once
 #include <stdexcept>
 namespace cooking {
-/** Ошибка кулинарной модели: CookingError. */
+/** Exception raised by the cooking model: CookingError. */
 class CookingError : public std::runtime_error {
   public:
     using std::runtime_error::runtime_error;

@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Расчёт порций с резервом и запасом выхода. */
+/** A portion estimate including reserve servings and yield. */
 class PortionPlan {
   public:
     PortionPlan(int guests = 4, int reserve = 1, double yield = .9);

@@ -7,7 +7,7 @@
 #include <vector>
 
 namespace cooking {
-/** Пищевая ценность заданного количества продукта. */
+/** Nutritional values for a given amount of food. */
 class Nutrition {
   public:
     Nutrition(double calories = 100, double protein = 5, double fat = 3, double carbs = 10);

@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Квалификация повара по техникам. */
+/** A chef's proficiency in cooking techniques. */
 class SkillProfile {
   public:
     SkillProfile(std::string speciality = "выпечка", int level = 1, int practice_hours = 0);

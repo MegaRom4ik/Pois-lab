@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Каталог рецептов с поиском и удалением. */
+/** A searchable recipe collection with removal support. */
 class RecipeBook {
   public:
     RecipeBook(std::string title = "Моя книга", std::vector<Recipe> recipes = {}, int revision = 0);

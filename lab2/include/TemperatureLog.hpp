@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Журнал замеров температуры оборудования. */
+/** A log of equipment temperature readings. */
 class TemperatureLog {
   public:
     TemperatureLog(std::string equipment = "Духовка", std::vector<double> readings = {}, double maximum = 300);

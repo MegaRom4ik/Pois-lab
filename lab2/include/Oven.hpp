@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Духовка: нагрев, проверка режима и остывание. */
+/** An oven with heating, readiness checks, and cooling. */
 class Oven {
   public:
     Oven(double temperature = 20, double maximum = 300, bool powered = false);

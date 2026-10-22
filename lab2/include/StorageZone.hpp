@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Температурная зона хранения. */
+/** A storage area with a temperature range. */
 class StorageZone {
   public:
     StorageZone(std::string name = "Холодильник", double minimum = 0, double maximum = 5, double temperature = 4);

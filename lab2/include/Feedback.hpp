@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Отзыв о блюде. */
+/** Feedback on a dish. */
 class Feedback {
   public:
     Feedback(std::string dish = "Каша", int score = 5, std::string comment = "Вкусно");

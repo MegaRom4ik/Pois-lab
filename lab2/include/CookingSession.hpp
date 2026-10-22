@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Приготовление по шагам с безопасным расходом склада. */
+/** Step-by-step cooking with atomic ingredient consumption. */
 class CookingSession {
   public:
     CookingSession(Recipe recipe = Recipe{}, int next_step = 0, bool started = false, int day = 1);

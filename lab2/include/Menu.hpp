@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Меню с подбором по рациону. */
+/** A menu filtered by dietary restrictions. */
 class Menu {
   public:
     Menu(std::string title = "Обед", std::vector<MenuItem> items = {}, int max_items = 20);

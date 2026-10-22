@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** План заданий с проверкой общего времени. */
+/** A task schedule checked against available working time. */
 class Schedule {
   public:
     Schedule(std::string day = "Понедельник", std::vector<Task> tasks = {}, int shift_minutes = 480);

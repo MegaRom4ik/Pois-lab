@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Учебное правило проверки продукта, не медицинская рекомендация. */
+/** An educational food safety rule, not medical advice. */
 class FoodSafetyRule {
   public:
     FoodSafetyRule(double min_temperature = 0, double max_temperature = 5, int max_open_days = 2);

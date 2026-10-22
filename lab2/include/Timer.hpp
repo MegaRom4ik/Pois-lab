@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Таймер шага приготовления. */
+/** A timer for a cooking step. */
 class Timer {
   public:
     Timer(int remaining = 5, bool running = false, int elapsed = 0);

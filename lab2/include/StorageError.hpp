@@ -1,7 +1,7 @@
 #pragma once
 #include "CookingError.hpp"
 namespace cooking {
-/** Ошибка кулинарной модели: StorageError. */
+/** Exception raised by the cooking model: StorageError. */
 class StorageError : public CookingError {
   public:
     using CookingError::CookingError;

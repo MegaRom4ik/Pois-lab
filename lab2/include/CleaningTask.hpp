@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Мойка инструмента с учётом времени. */
+/** A tool cleaning task with time tracking. */
 class CleaningTask {
   public:
     CleaningTask(KitchenTool tool = KitchenTool{}, int required_minutes = 5, int spent_minutes = 0);

@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Перевод массы в объём по плотности. */
+/** Conversion between mass and volume using density. */
 class UnitConversion {
   public:
     UnitConversion(Ingredient ingredient = Ingredient{}, double grams_per_ml = .6, std::string volume_unit = "мл");

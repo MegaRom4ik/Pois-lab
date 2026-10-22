@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Норма подачи по массе и украшению. */
+/** Serving quantities for food and garnish. */
 class PlatingRule {
   public:
     PlatingRule(std::string style = "Домашняя", double portion_grams = 250, double garnish_grams = 10);

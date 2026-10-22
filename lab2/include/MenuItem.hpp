@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Позиция меню и цена порции. */
+/** A menu entry and its price per serving. */
 class MenuItem {
   public:
     MenuItem(Recipe recipe = Recipe{}, double price = 15, bool enabled = true);

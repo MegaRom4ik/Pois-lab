@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Предложение цены за килограмм продукта. */
+/** A price offer per kilogram of an ingredient. */
 class PriceQuote {
   public:
     PriceQuote(std::string ingredient = "мука", double per_kg = 100, int valid_until = 30);

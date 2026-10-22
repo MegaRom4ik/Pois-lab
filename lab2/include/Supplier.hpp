@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Поставщик с ассортиментом и минимальной суммой заказа. */
+/** A supplier with product offers and a minimum order value. */
 class Supplier {
   public:
     Supplier(std::string name = "Ферма", std::vector<PriceQuote> offers = {PriceQuote{}}, double minimum_order = 10);

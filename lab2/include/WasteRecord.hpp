@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Учёт списания продукта и стоимости потерь. */
+/** Discarded ingredients and the cost of waste. */
 class WasteRecord {
   public:
     WasteRecord(Ingredient ingredient = Ingredient{}, Quantity amount = Quantity{}, std::string reason = "Порча");

@@ -1,7 +1,7 @@
 #pragma once
 #include "CookingError.hpp"
 namespace cooking {
-/** Ошибка кулинарной модели: AllergyError. */
+/** Exception raised by the cooking model: AllergyError. */
 class AllergyError : public CookingError {
   public:
     using CookingError::CookingError;

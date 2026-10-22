@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Рецепт с составом и последовательностью шагов. */
+/** A recipe with ingredients and ordered cooking steps. */
 class Recipe {
   public:
     Recipe(std::string name = "Каша", int servings = 2, std::vector<IngredientAmount> ingredients = {},

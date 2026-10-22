@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Склад: расходует сначала партии с ближайшим сроком. */
+/** Ingredient storage that consumes usable batches by earliest expiry. */
 class Pantry {
   public:
     Pantry(std::string name = "Склад", std::vector<InventoryBatch> batches = {}, double capacity = 100000);

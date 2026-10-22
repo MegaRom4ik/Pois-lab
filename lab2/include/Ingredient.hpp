@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Продукт, пищевая ценность и аллергены. */
+/** A food ingredient with nutritional values and allergens. */
 class Ingredient {
   public:
     Ingredient(std::string name = "мука", Nutrition nutrition = Nutrition{}, std::vector<std::string> allergens = {},

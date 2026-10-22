@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Строка рецепта: продукт, количество и обязательность. */
+/** A recipe ingredient, its amount, and whether it is optional. */
 class IngredientAmount {
   public:
     IngredientAmount(Ingredient ingredient = Ingredient{}, Quantity amount = Quantity{}, bool optional = false);

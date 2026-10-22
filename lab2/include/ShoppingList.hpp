@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Список покупок с ограничением числа позиций. */
+/** A shopping list with an item limit. */
 class ShoppingList {
   public:
     ShoppingList(std::string title = "Закупка", std::vector<ShoppingItem> items = {}, int limit = 100);

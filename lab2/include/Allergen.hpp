@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Аллерген и порог чувствительности. */
+/** An allergen and its sensitivity threshold. */
 class Allergen {
   public:
     Allergen(std::string name = "молоко", int severity = 2, bool trace_sensitive = true);

@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Ограничения питания пользователя. */
+/** A user's dietary restrictions. */
 class DietProfile {
   public:
     DietProfile(std::string person = "Гость", std::vector<Allergen> forbidden = {}, double calorie_limit = 800,

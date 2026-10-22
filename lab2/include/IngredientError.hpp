@@ -1,7 +1,7 @@
 #pragma once
 #include "CookingError.hpp"
 namespace cooking {
-/** Ошибка кулинарной модели: IngredientError. */
+/** Exception raised by the cooking model: IngredientError. */
 class IngredientError : public CookingError {
   public:
     using CookingError::CookingError;

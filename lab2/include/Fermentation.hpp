@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Учебная оценка готовности теста по времени. */
+/** An educational estimate of dough readiness based on time. */
 class Fermentation {
   public:
     Fermentation(Dough dough = Dough{}, int required_minutes = 60, int elapsed_minutes = 0);

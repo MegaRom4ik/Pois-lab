@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** План питания с суммированием калорий. */
+/** A meal plan with a total calorie limit. */
 class MealPlan {
   public:
     MealPlan(DietProfile profile = DietProfile{}, std::vector<Recipe> meals = {}, double daily_limit = 2000);

@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Задание повару с крайним сроком. */
+/** A cooking task with a deadline. */
 class Task {
   public:
     Task(Recipe recipe = Recipe{}, int deadline = 60, bool completed = false);

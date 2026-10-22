@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Средняя оценка конкретного рецепта. */
+/** The average rating of a specific recipe. */
 class RatingSummary {
   public:
     RatingSummary(Recipe recipe = Recipe{}, std::vector<Feedback> feedback = {}, int minimum_reviews = 1);

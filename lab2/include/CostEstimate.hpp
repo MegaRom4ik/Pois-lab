@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Себестоимость блюда: продукты, труд и накладные расходы. */
+/** Dish costs including ingredients, labor, and overhead. */
 class CostEstimate {
   public:
     CostEstimate(ShoppingList products = ShoppingList{}, double labor_per_minute = 1, double overhead = 5);

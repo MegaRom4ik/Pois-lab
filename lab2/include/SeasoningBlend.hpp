@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 namespace cooking {
-/** Смесь приправ с нормой дозировки. */
+/** A seasoning mixture with a recommended dose in the model. */
 class SeasoningBlend {
   public:
     SeasoningBlend(std::string name = "Травы", std::vector<IngredientAmount> components = {IngredientAmount{}},
