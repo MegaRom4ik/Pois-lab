@@ -1,3 +1,3 @@
-# Лабораторная 3
+# Lab 3
 
-Папка для следующей работы. Реализация пока не добавлена.
+Reserved for a future assignment. No implementation yet.
