@@ -12,11 +12,11 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y clang llvm cppcheck doxygen
       - name: Build
-        run: make all check-lab2-model
+        run: make all check-lab2-model check-lab3-model
       - name: Test and require more than 90 percent domain line coverage
         run: make test coverage
       - name: Static analysis
-        run: cppcheck --enable=warning,performance,portability --error-exitcode=1 --std=c++17 --suppress=missingIncludeSystem -Ilab2/include lab1/vector lab1/tictactoe lab1/cli lab2/src lab2/main.cpp
+        run: cppcheck --enable=warning,performance,portability --error-exitcode=1 --std=c++17 --suppress=missingIncludeSystem -Ilab2/include -Ilab3/include lab1/vector lab1/tictactoe lab1/cli lab2/src lab2/main.cpp lab3/src lab3/main.cpp
       - name: Generate documentation
         run: make docs
       - uses: actions/upload-artifact@v4
@@ -26,6 +26,9 @@ jobs:
             build/vector_cli
             build/tictactoe_cli
             build/cooking_cli
+            build/fitness_cli
+            build/fitness-docs/html
+            build/fitness-coverage
             build/cooking-docs/html
             build/cooking-coverage
             build/docs/html
@@ -45,7 +48,7 @@ jobs:
       - name: Package binaries and documentation
         run: |
           make docs
-          tar -czf build/ppois-linux-x86_64.tar.gz -C build vector_cli tictactoe_cli cooking_cli docs/html cooking-docs/html
+          tar -czf build/ppois-linux-x86_64.tar.gz -C build vector_cli tictactoe_cli cooking_cli fitness_cli docs/html cooking-docs/html fitness-docs/html
       - name: Publish tagged release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -73,13 +76,15 @@ jobs:
           lipo build/vector_cli -verify_arch arm64 x86_64
           lipo build/tictactoe_cli -verify_arch arm64 x86_64
           lipo build/cooking_cli -verify_arch arm64 x86_64
+          lipo build/fitness_cli -verify_arch arm64 x86_64
           printf '0\n' | ./build/vector_cli
           printf '0\n' | ./build/tictactoe_cli
           printf '0\n' | ./build/cooking_cli
+          printf '0\n' | ./build/fitness_cli
       - name: Package binaries and documentation
         run: |
           make docs
-          tar -czf build/ppois-macos-universal.tar.gz -C build vector_cli tictactoe_cli cooking_cli docs/html cooking-docs/html
+          tar -czf build/ppois-macos-universal.tar.gz -C build vector_cli tictactoe_cli cooking_cli fitness_cli docs/html cooking-docs/html fitness-docs/html
       - name: Publish macOS archive
         env:
           GH_TOKEN: ${{ github.token }}
