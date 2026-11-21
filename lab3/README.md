@@ -35,10 +35,10 @@ For example, item 2 with day `0`, workout `Morning run`, activity `Run`, distanc
 ## Domain rules
 
 - Invalid input raises a domain exception before it is recorded. All fields are private and public accessors are read-only.
-- Completed workouts must contain strength or cardio work; a session can be completed once. The log rejects unfinished sessions and duplicate IDs.
+- Completed workouts must contain at least one strength set (including zero-load bodyweight sets) or a cardio activity; a session can be completed once. The log rejects unfinished sessions and duplicate IDs.
 - Strength volume is repetitions multiplied by load, summed over sets. Unilateral work counts both sides. It is expressed as kg-repetitions, not energy.
 - Cardio speed uses active time; elapsed time includes rest and pauses. Pace requires a positive distance. Lap comparisons require equal distances.
-- Step history stores one total per day. Weight records must have strictly increasing days. Multiple meals and water servings per day are allowed; sleep is one record per awakening day.
+- Step history stores one total per day. Weight records must have strictly increasing days. Multiple meals and water servings per day are allowed; sleep is one record per awakening day. Sleep targets must be between 1 and 1440 minutes; total deficits use a 64-bit integer.
 - Schedule slots must fit within one day, cannot overlap, and respect the calendar's daily duration limit. Adjacent slots are allowed.
 - Sensor timestamps must increase. Time in a heart-rate zone uses the previous reading until the next sample, ignoring gaps over the configured maximum. Zones are inclusive and chosen by the user.
 - Sleep times are minutes since midnight. A wake time before bedtime means the next day; equal times are rejected as ambiguous. Duration is under 24 hours.
@@ -49,11 +49,11 @@ For example, item 2 with day `0`, workout `Morning run`, activity `Run`, distanc
 
 ## Object model
 
-There are 52 domain classes, 167 fields, 130 implemented domain methods and 65 directed associations between distinct domain classes. Constructors, inline read-only accessors and exception classes are excluded from the behavior count. The checker counts methods mechanically; the inventory below states each method's purpose for review. In particular, forwarding application operations are shown explicitly rather than hidden in the totals.
+There are 52 domain classes, 167 fields, 130 implemented domain methods and 65 directed associations between distinct domain classes. The reviewed behavior inventory counts 113 substantive behaviors and excludes 17 forwarding, setter-like, elementary accessor/conversion or duplicate operations. Constructors, inline read-only getters and exception classes are not counted. Each counted operation has a domain purpose in [behavior_inventory.json](behavior_inventory.json); each excluded operation has a reason. The checker verifies that every implementation is classified exactly once. This is a documented review decision, not an automatic proof of semantic uniqueness.
 
 An association is one directed class pair where the target appears in the source's fields or method parameters; repeated uses of the same pair count once. Exceptions are listed separately: 14 specialized exception classes derive from `FitnessError`, for 15 custom exception classes including the base.
 
-| Class | Fields | Domain methods | Associated classes |
+| Class | Fields | Implemented methods | Associated classes |
 |---|---|---|---|
 | Distance | 3 | 3 | — |
 | Duration | 3 | 3 | — |
