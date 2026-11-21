@@ -86,3 +86,40 @@ all: lab2
 test: test-lab2
 coverage: coverage-lab2
 docs: docs-lab2
+
+LAB3_SOURCES = $(wildcard lab3/src/*.cpp)
+LAB3_HEADERS = $(wildcard lab3/include/*.hpp)
+LAB3_TESTS = $(wildcard lab3/tests/*.cpp)
+
+.PHONY: lab3 test-lab3 coverage-lab3 docs-lab3 check-lab3-model
+lab3: build/fitness_cli
+
+build/fitness_cli: lab3/main.cpp $(LAB3_SOURCES) $(LAB3_HEADERS) lab1/cli/Input.hpp | build
+	$(CXX) $(CXXFLAGS) -Ilab3/include lab3/main.cpp $(LAB3_SOURCES) -o $@
+
+build/fitness_tests: $(LAB3_TESTS) $(LAB3_SOURCES) $(LAB3_HEADERS) build/doctest.h
+	$(CXX) $(CXXFLAGS) -Ibuild -Ilab3/include $(LAB3_TESTS) $(LAB3_SOURCES) -o $@
+
+test-lab3: build/fitness_tests
+	./build/fitness_tests
+
+build/fitness_coverage_tests: $(LAB3_TESTS) $(LAB3_SOURCES) $(LAB3_HEADERS) build/doctest.h
+	$(CXX) $(CXXFLAGS) -O0 -g -fprofile-instr-generate -fcoverage-mapping -Ibuild -Ilab3/include $(LAB3_TESTS) $(LAB3_SOURCES) -o $@
+
+coverage-lab3: build/fitness_coverage_tests
+	LLVM_PROFILE_FILE=build/fitness.profraw ./build/fitness_coverage_tests
+	$(LLVM_PROFDATA) merge -sparse build/fitness.profraw -o build/fitness.profdata
+	$(LLVM_COV) export ./build/fitness_coverage_tests -instr-profile=build/fitness.profdata $(LAB3_SOURCES) > build/fitness-coverage.json
+	python3 scripts/check_lab3.py coverage build/fitness-coverage.json
+	$(LLVM_COV) show ./build/fitness_coverage_tests -instr-profile=build/fitness.profdata $(LAB3_SOURCES) -format=html -output-dir=build/fitness-coverage
+
+docs-lab3:
+	doxygen lab3/Doxyfile
+
+check-lab3-model:
+	python3 scripts/check_lab3.py model lab3
+
+all: lab3
+test: test-lab3
+coverage: coverage-lab3
+docs: docs-lab3

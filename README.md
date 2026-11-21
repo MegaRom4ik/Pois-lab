@@ -55,3 +55,17 @@ make docs
 
 Open `build/docs/html/index.html` for Lab 1 or, on the Lab 2 branch, `build/cooking-docs/html/index.html`
 in a browser. The generated HTML can be read without installing Doxygen.
+
+## Lab 3
+
+Fitness tracking: workouts, activity logs, goals, food, water, sleep and progress reports. Branch: `feature/lab3-fitness`.
+
+```sh
+make lab3
+./build/fitness_cli
+make test-lab3
+make coverage-lab3
+make docs-lab3
+```
+
+Model and usage: [lab3/README.md](lab3/README.md). Documentation: `build/fitness-docs/html/index.html`. Coverage: `build/fitness-coverage/index.html`.
