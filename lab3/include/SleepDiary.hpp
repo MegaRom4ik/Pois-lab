@@ -3,7 +3,7 @@
 #include "SleepEntry.hpp"
 #include "Support.hpp"
 namespace fitness {
-/** Daily sleep records and a user selected duration target. */
+/** Daily sleep records and a user selected target of 1 to 1440 minutes. */
 class SleepDiary {
   public:
     SleepDiary(const std::vector<SleepEntry> &entries = {}, int target_minutes = 480,
@@ -18,8 +18,8 @@ class SleepDiary {
     void record(const SleepEntry &entry);
     /** Calculate mean sleep duration in hours. */
     double average_hours() const;
-    /** Sum shortfalls relative to the selected sleep duration. */
-    int total_deficit() const;
+    /** Sum shortfalls with a 64-bit accumulator over unique recorded days. */
+    long long total_deficit() const;
 
   private:
     std::vector<SleepEntry> entries_;
