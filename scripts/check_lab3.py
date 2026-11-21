@@ -8,7 +8,7 @@ from pathlib import Path
 def check_model(folder):
     classes = []
     fields = 0
-    behaviors = 0
+    implemented = set()
     for header in sorted((folder / "include").glob("*.hpp")):
         declaration = header.read_text()
         match = re.search(r"class (\w+) \{", declaration)
@@ -19,7 +19,16 @@ def check_model(folder):
         private = declaration.split("private:", 1)[1].split("};", 1)[0]
         fields += len(re.findall(r"\w+_;", private))
         source = (folder / "src" / (name + ".cpp")).read_text()
-        behaviors += len(re.findall(r"\b" + name + r"::(?!" + name + r"\b)\w+\s*\(", source))
+        methods = re.findall(r"\b" + name + r"::(?!" + name + r"\b)(\w+)\s*\(", source)
+        implemented.update(name + "::" + method for method in methods)
+    inventory = json.loads((folder / "behavior_inventory.json").read_text())
+    counted = set(inventory["counted"])
+    excluded = set(inventory["excluded"])
+    if counted & excluded or counted | excluded != implemented:
+        sys.exit("Behavior inventory must classify every implemented method exactly once")
+    if any(not reason.strip() for group in inventory.values() for reason in group.values()):
+        sys.exit("Every behavior needs a purpose or exclusion reason")
+    behaviors = len(counted)
     associations = 0
     for name, declaration in classes:
         private = declaration.split("private:", 1)[1].split("};", 1)[0]
